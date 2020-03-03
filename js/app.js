@@ -109,21 +109,38 @@ const tareas = (datos) => {
 	result.innerHTML = '';
 
 	for (let data in datos) {
-	       
-	    result.innerHTML += `
-	    	<tr>
-		       <td>${datos[data].id}</td>
-		       <td>${datos[data].name}</td>
-		       <td>${datos[data].description}</td>
-		       <td>${datos[data].status}</td>
-		       <td>
-		       		<div class="btn-group" role="group" aria-label="Basic example">
-				  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
-				  		<button type="button" class="btn btn-danger" onclick="deleteData('${datos[data].id}')">Eliminar</button>
-					</div>
-				</td>
-	       </tr>
-	    `
+
+		if(datos[data].status == 1){
+			result.innerHTML += `
+		    	<tr>
+			       <td>${datos[data].id}</td>
+			       <td>${datos[data].name}</td>
+			       <td>${datos[data].description}</td>
+			       <td class="text-success">Realizado</td>
+			       <td>
+			       		<div class="btn-group" role="group" aria-label="Basic example">
+					  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
+					  		<button type="button" class="btn btn-danger" onclick="deleteData('${datos[data].id}')">Eliminar</button>
+						</div>
+					</td>
+		       	</tr>
+	    	`
+		}else if (datos[data].status == 0) {
+			result.innerHTML += `
+		    	<tr>
+			       <td>${datos[data].id}</td>
+			       <td>${datos[data].name}</td>
+			       <td>${datos[data].description}</td>
+			       <td class="text-danger">Pendiente</td>
+			       <td>
+			       		<div class="btn-group" role="group" aria-label="Basic example">
+					  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
+					  		<button type="button" class="btn btn-danger" onclick="deleteData('${datos[data].id}')">Eliminar</button>
+						</div>
+					</td>
+		       	</tr>
+	    	`
+		}
 	}
 }
 
