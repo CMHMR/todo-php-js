@@ -1,6 +1,6 @@
 <?php 
 	
-	$db = 'mysql:host=localhost; dbname=php-ajax';
+	$db = 'mysql:host=localhost; dbname=php_ajax';
 	$user = 'root';
 	$pass = '';
 

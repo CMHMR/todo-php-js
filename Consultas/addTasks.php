@@ -5,7 +5,9 @@
 	$name = $_POST['name'];
 	$description = $_POST['description'];
 
-	if ($name === '') {
+	$result = preg_match("/^[\w\s]+$/", $name);
+
+	if (!$result) {
 		echo json_encode(false);
 	}else{
 

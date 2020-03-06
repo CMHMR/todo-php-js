@@ -35,7 +35,7 @@ function enterData(event) {
 			if (!datos) {
 				response.innerHTML = `
 				<div class="alert alert-danger alert-dismissible fade-out show" role="alert">
-  					<strong>Le comunicamos: </strong> El nombre de la tarea es requerido.
+  					<strong>Le comunicamos: </strong> El nombre de la tarea es requerido o deben ser solo letras o números.
   					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
     					<span aria-hidden="true">&times;</span>
   					</button>
@@ -58,32 +58,13 @@ function enterData(event) {
 		.catch(err => {
 			console.log(err)
 		})
-
 }
 
 function resultado (datos) {
 
 	result.innerHTML = '';
 
-	for (let data in datos) {
-
-	    result.innerHTML += `
-	    	<tr>
-				<td>${datos[data].id}</td>
-				<td>${datos[data].name}</td>
-				<td>${datos[data].description}</td>
-				<td>${datos[data].status}</td>
-		       	<td>
-		       		<div class="btn-group" role="group" aria-label="Basic example">
-				  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
-				  		<button type="button" class="btn btn-danger" onclick="deleteData('${datos[data].id}')">Eliminar</button>
-					</div>
-				</td>
-	       </tr>
-	    `	    
-	}
-
-	if (datos.length === 0) {
+		if (datos.length === 0) {
 		result.innerHTML += `
 			<td colspan="5" class="text-center">
 				<div class="p-2">
@@ -91,6 +72,41 @@ function resultado (datos) {
 				</div>
 			</td>
 		`
+	}
+
+	for (let data in datos) {
+
+	    if(datos[data].status == 1){
+			result.innerHTML += `
+		    	<tr>
+			       <td>${datos[data].id}</td>
+			       <td>${datos[data].name}</td>
+			       <td>${datos[data].description}</td>
+			       <td><span class="badge badge-success">Realizado</span></td>
+			       <td>
+			       		<div class="btn-group" role="group" aria-label="Basic example">
+					  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
+					  		<button type="button" class="btn btn-danger" onclick="deleteData('${datos[data].id}')">Eliminar</button>
+						</div>
+					</td>
+		       	</tr>
+	    	`
+		}else if (datos[data].status == 0) {
+			result.innerHTML += `
+		    	<tr>
+			       <td>${datos[data].id}</td>
+			       <td>${datos[data].name}</td>
+			       <td>${datos[data].description}</td>
+			       <td><span class="badge badge-danger">Pendiente</span></td>
+			       <td>
+			       		<div class="btn-group" role="group" aria-label="Basic example">
+					  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
+					  		<button type="button" class="btn btn-danger" onclick="deleteData('${datos[data].id}')">Eliminar</button>
+						</div>
+					</td>
+		       	</tr>
+	    	`
+		}    
 	}
 }
 
@@ -108,6 +124,16 @@ const tareas = (datos) => {
 
 	result.innerHTML = '';
 
+	if (datos.length === 0) {
+		result.innerHTML += `
+			<td colspan="5" class="text-center">
+				<div class="p-2">
+					<strong> No hay datos </strong>
+				</div>
+			</td>
+		`
+	}
+	
 	for (let data in datos) {
 
 		if(datos[data].status == 1){
@@ -116,7 +142,7 @@ const tareas = (datos) => {
 			       <td>${datos[data].id}</td>
 			       <td>${datos[data].name}</td>
 			       <td>${datos[data].description}</td>
-			       <td class="text-success">Realizado</td>
+			       <td><span class="badge badge-success">Realizado</span></td>
 			       <td>
 			       		<div class="btn-group" role="group" aria-label="Basic example">
 					  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
@@ -131,7 +157,7 @@ const tareas = (datos) => {
 			       <td>${datos[data].id}</td>
 			       <td>${datos[data].name}</td>
 			       <td>${datos[data].description}</td>
-			       <td class="text-danger">Pendiente</td>
+			       <td><span class="badge badge-danger">Pendiente</span></td>
 			       <td>
 			       		<div class="btn-group" role="group" aria-label="Basic example">
 					  		<button type="button" class="btn btn-success" onclick="editData('${datos[data].id}', '${datos[data].status}')">Editar</button>
